@@ -5,174 +5,185 @@ local Lighting = game:GetService("Lighting")
 local StarterGui = game:GetService("StarterGui")
 local VirtualUser = game:GetService("VirtualUser")
 local VirtualInputManager = game:GetService("VirtualInputManager")
+local TweenService = game:GetService("TweenService")
 local LocalPlayer = Players.LocalPlayer
 local Camera = workspace.CurrentCamera
 
 pcall(function()
     StarterGui:SetCore("SendNotification", {
-        Title = "Notice";
-        Text = "use script with blue box for unlocking skins and homer chances";
-        Duration = 10;
-    })
-end)
-
-pcall(function()
-    StarterGui:SetCore("SendNotification", {
-        Title = "Anti Afk";
-        Text = "ion think this will work but eh";
-        Duration = 5;
+        Title = "Loaded",
+        Text = "Modern UI Active",
+        Duration = 5,
     })
 end)
 
 local ScreenGui = Instance.new("ScreenGui")
-local MainFrame = Instance.new("Frame")
-local UICorner = Instance.new("UICorner")
-local Title = Instance.new("TextLabel")
-local MinimizeButton = Instance.new("TextButton")
-local MinCorner = Instance.new("UICorner")
-local SearchBar = Instance.new("TextBox")
-local SearchCorner = Instance.new("UICorner")
-local ContentFrame = Instance.new("ScrollingFrame")
-local UIListLayout = Instance.new("UIListLayout")
-local SpectateFrame = Instance.new("Frame")
-local SpectateCorner = Instance.new("UICorner")
-local SpecName = Instance.new("TextLabel")
-local SpecPrev = Instance.new("TextButton")
-local SpecNext = Instance.new("TextButton")
-local SpecHighlight = Instance.new("TextButton")
-local SpecExit = Instance.new("TextButton")
-
-ScreenGui.Name = "yvh script"
+ScreenGui.Name = "YvH_Modern_UI"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
 
+local MainFrame = Instance.new("Frame")
 MainFrame.Name = "MainFrame"
 MainFrame.Parent = ScreenGui
-MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-MainFrame.Position = UDim2.new(0.5, -110, 0.5, -200)
-MainFrame.Size = UDim2.new(0, 220, 0, 440)
+MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+MainFrame.Position = UDim2.new(0.5, -120, 0.5, -200)
+MainFrame.Size = UDim2.new(0, 240, 0, 450)
 MainFrame.BorderSizePixel = 0
 MainFrame.Active = true
-MainFrame.ClipsDescendants = true
 
-UICorner.CornerRadius = UDim.new(0, 12)
-UICorner.Parent = MainFrame
+local MainStroke = Instance.new("UIStroke")
+MainStroke.Parent = MainFrame
+MainStroke.Color = Color3.fromRGB(50, 50, 60)
+MainStroke.Thickness = 1.5
 
-Title.Name = "Title"
-Title.Parent = MainFrame
-Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Title.BackgroundTransparency = 1.000
-Title.Position = UDim2.new(0, 12, 0, 8)
-Title.Size = UDim2.new(0.7, 0, 0, 30)
+local MainCorner = Instance.new("UICorner")
+MainCorner.CornerRadius = UDim.new(0, 10)
+MainCorner.Parent = MainFrame
+
+local TopBar = Instance.new("Frame")
+TopBar.Name = "TopBar"
+TopBar.Parent = MainFrame
+TopBar.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+TopBar.Size = UDim2.new(1, 0, 0, 40)
+TopBar.BorderSizePixel = 0
+
+local TopBarCorner = Instance.new("UICorner")
+TopBarCorner.CornerRadius = UDim.new(0, 10)
+TopBarCorner.Parent = TopBar
+
+local TopBarFix = Instance.new("Frame")
+TopBarFix.Parent = TopBar
+TopBarFix.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+TopBarFix.BorderSizePixel = 0
+TopBarFix.Position = UDim2.new(0, 0, 1, -10)
+TopBarFix.Size = UDim2.new(1, 0, 0, 10)
+TopBarFix.ZIndex = 0
+
+local Title = Instance.new("TextLabel")
+Title.Parent = TopBar
+Title.BackgroundTransparency = 1
+Title.Position = UDim2.new(0, 12, 0, 0)
+Title.Size = UDim2.new(0.7, 0, 1, 0)
 Title.Font = Enum.Font.GothamBold
-Title.Text = "Proximity YvH"
-Title.TextColor3 = Color3.fromRGB(220, 220, 220)
-Title.TextSize = 16.000
+Title.Text = "PROXIMITY YVH"
+Title.TextColor3 = Color3.fromRGB(240, 240, 240)
+Title.TextSize = 14
 Title.TextXAlignment = Enum.TextXAlignment.Left
 
-MinimizeButton.Name = "MinimizeButton"
-MinimizeButton.Parent = MainFrame
-MinimizeButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-MinimizeButton.Position = UDim2.new(1, -38, 0, 8)
-MinimizeButton.Size = UDim2.new(0, 25, 0, 25)
+local MinimizeButton = Instance.new("TextButton")
+MinimizeButton.Parent = TopBar
+MinimizeButton.BackgroundColor3 = Color3.fromRGB(45, 45, 50)
+MinimizeButton.Position = UDim2.new(1, -36, 0.5, -12)
+MinimizeButton.Size = UDim2.new(0, 24, 0, 24)
 MinimizeButton.Font = Enum.Font.GothamBold
 MinimizeButton.Text = "-"
 MinimizeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-MinimizeButton.TextSize = 18.000
+MinimizeButton.TextSize = 16
 MinimizeButton.AutoButtonColor = true
 
+local MinCorner = Instance.new("UICorner")
 MinCorner.CornerRadius = UDim.new(0, 6)
 MinCorner.Parent = MinimizeButton
 
-SearchBar.Name = "SearchBar"
+local SearchBar = Instance.new("TextBox")
 SearchBar.Parent = MainFrame
-SearchBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-SearchBar.Position = UDim2.new(0, 10, 0, 45)
-SearchBar.Size = UDim2.new(1, -20, 0, 30)
-SearchBar.Font = Enum.Font.Gotham
+SearchBar.BackgroundColor3 = Color3.fromRGB(35, 35, 40)
+SearchBar.Position = UDim2.new(0, 10, 0, 50)
+SearchBar.Size = UDim2.new(1, -20, 0, 32)
+SearchBar.Font = Enum.Font.GothamMedium
 SearchBar.PlaceholderText = "Search..."
 SearchBar.Text = ""
 SearchBar.TextColor3 = Color3.fromRGB(255, 255, 255)
-SearchBar.TextSize = 14.000
-SearchBar.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
+SearchBar.TextSize = 14
+SearchBar.PlaceholderColor3 = Color3.fromRGB(120, 120, 130)
 
+local SearchCorner = Instance.new("UICorner")
 SearchCorner.CornerRadius = UDim.new(0, 8)
 SearchCorner.Parent = SearchBar
 
-ContentFrame.Name = "ContentFrame"
+local ContentFrame = Instance.new("ScrollingFrame")
 ContentFrame.Parent = MainFrame
 ContentFrame.BackgroundTransparency = 1
-ContentFrame.Position = UDim2.new(0, 0, 0, 85)
-ContentFrame.Size = UDim2.new(1, 0, 1, -85)
-ContentFrame.ScrollBarThickness = 2
+ContentFrame.Position = UDim2.new(0, 0, 0, 90)
+ContentFrame.Size = UDim2.new(1, 0, 1, -95)
+ContentFrame.ScrollBarThickness = 3
+ContentFrame.ScrollBarImageColor3 = Color3.fromRGB(80, 80, 90)
 ContentFrame.BorderSizePixel = 0
 ContentFrame.AutomaticCanvasSize = Enum.AutomaticSize.Y
 ContentFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
 
+local UIListLayout = Instance.new("UIListLayout")
 UIListLayout.Parent = ContentFrame
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-UIListLayout.Padding = UDim.new(0, 6)
+UIListLayout.Padding = UDim.new(0, 8)
 UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 
+local SpectateFrame = Instance.new("Frame")
 SpectateFrame.Name = "SpectateFrame"
 SpectateFrame.Parent = ScreenGui
-SpectateFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-SpectateFrame.Position = UDim2.new(0.5, -125, 0.85, 0)
-SpectateFrame.Size = UDim2.new(0, 250, 0, 80)
+SpectateFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+SpectateFrame.Position = UDim2.new(0.5, -110, 0.85, 0)
+SpectateFrame.Size = UDim2.new(0, 220, 0, 90)
 SpectateFrame.Visible = false
 SpectateFrame.Active = true
 
-SpectateCorner.CornerRadius = UDim.new(0, 10)
+local SpecStroke = Instance.new("UIStroke")
+SpecStroke.Parent = SpectateFrame
+SpecStroke.Color = Color3.fromRGB(50, 50, 60)
+SpecStroke.Thickness = 1.5
+
+local SpectateCorner = Instance.new("UICorner")
+SpectateCorner.CornerRadius = UDim.new(0, 12)
 SpectateCorner.Parent = SpectateFrame
 
-SpecName.Name = "SpecName"
+local SpecName = Instance.new("TextLabel")
 SpecName.Parent = SpectateFrame
 SpecName.BackgroundTransparency = 1
-SpecName.Position = UDim2.new(0, 0, 0, 5)
-SpecName.Size = UDim2.new(1, 0, 0, 25)
+SpecName.Position = UDim2.new(0, 0, 0, 8)
+SpecName.Size = UDim2.new(1, 0, 0, 20)
 SpecName.Font = Enum.Font.GothamBold
 SpecName.Text = "Player Name"
 SpecName.TextColor3 = Color3.fromRGB(255, 255, 255)
-SpecName.TextSize = 16
+SpecName.TextSize = 14
 
-SpecPrev.Name = "Prev"
+local SpecPrev = Instance.new("TextButton")
 SpecPrev.Parent = SpectateFrame
-SpecPrev.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-SpecPrev.Position = UDim2.new(0, 10, 0, 35)
-SpecPrev.Size = UDim2.new(0, 30, 0, 35)
+SpecPrev.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+SpecPrev.Position = UDim2.new(0, 10, 0, 40)
+SpecPrev.Size = UDim2.new(0, 35, 0, 35)
 SpecPrev.Font = Enum.Font.GothamBold
 SpecPrev.Text = "<"
 SpecPrev.TextColor3 = Color3.fromRGB(255, 255, 255)
-SpecPrev.TextSize = 20
-Instance.new("UICorner", SpecPrev).CornerRadius = UDim.new(0, 6)
+SpecPrev.TextSize = 18
+Instance.new("UICorner", SpecPrev).CornerRadius = UDim.new(0, 8)
 
-SpecNext.Name = "Next"
+local SpecNext = Instance.new("TextButton")
 SpecNext.Parent = SpectateFrame
-SpecNext.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-SpecNext.Position = UDim2.new(1, -40, 0, 35)
-SpecNext.Size = UDim2.new(0, 30, 0, 35)
+SpecNext.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+SpecNext.Position = UDim2.new(1, -45, 0, 40)
+SpecNext.Size = UDim2.new(0, 35, 0, 35)
 SpecNext.Font = Enum.Font.GothamBold
 SpecNext.Text = ">"
 SpecNext.TextColor3 = Color3.fromRGB(255, 255, 255)
-SpecNext.TextSize = 20
-Instance.new("UICorner", SpecNext).CornerRadius = UDim.new(0, 6)
+SpecNext.TextSize = 18
+Instance.new("UICorner", SpecNext).CornerRadius = UDim.new(0, 8)
 
-SpecHighlight.Name = "Highlight"
+local SpecHighlight = Instance.new("TextButton")
 SpecHighlight.Parent = SpectateFrame
-SpecHighlight.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
-SpecHighlight.Position = UDim2.new(0.5, -60, 0, 35)
-SpecHighlight.Size = UDim2.new(0, 120, 0, 35)
+SpecHighlight.BackgroundColor3 = Color3.fromRGB(200, 60, 60)
+SpecHighlight.Position = UDim2.new(0.5, -50, 0, 40)
+SpecHighlight.Size = UDim2.new(0, 100, 0, 35)
 SpecHighlight.Font = Enum.Font.GothamBold
-SpecHighlight.Text = "Highlight (!)"
+SpecHighlight.Text = "Highlight"
 SpecHighlight.TextColor3 = Color3.fromRGB(255, 255, 255)
-SpecHighlight.TextSize = 14
-Instance.new("UICorner", SpecHighlight).CornerRadius = UDim.new(0, 6)
+SpecHighlight.TextSize = 12
+Instance.new("UICorner", SpecHighlight).CornerRadius = UDim.new(0, 8)
 
-SpecExit.Name = "Exit"
+local SpecExit = Instance.new("TextButton")
 SpecExit.Parent = SpectateFrame
-SpecExit.BackgroundColor3 = Color3.fromRGB(150, 30, 30)
-SpecExit.Position = UDim2.new(1, -25, 0, -10)
-SpecExit.Size = UDim2.new(0, 20, 0, 20)
+SpecExit.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+SpecExit.Position = UDim2.new(1, -22, 0, -8)
+SpecExit.Size = UDim2.new(0, 24, 0, 24)
 SpecExit.Font = Enum.Font.GothamBold
 SpecExit.Text = "X"
 SpecExit.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -180,31 +191,42 @@ SpecExit.TextSize = 12
 Instance.new("UICorner", SpecExit).CornerRadius = UDim.new(1, 0)
 
 local function createLabel(text, order)
+    local frame = Instance.new("Frame")
+    frame.Name = text .. "Section"
+    frame.Parent = ContentFrame
+    frame.BackgroundTransparency = 1
+    frame.Size = UDim2.new(1, -20, 0, 20)
+    frame.LayoutOrder = order
+
     local lbl = Instance.new("TextLabel")
-    lbl.Name = text .. "Label"
-    lbl.Parent = ContentFrame
-    lbl.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-    lbl.Size = UDim2.new(0, 200, 0, 25)
-    lbl.Font = Enum.Font.GothamBlack
-    lbl.Text = text
-    lbl.TextColor3 = Color3.fromRGB(180, 180, 180)
-    lbl.TextSize = 14
-    lbl.LayoutOrder = order
-    Instance.new("UICorner", lbl).CornerRadius = UDim.new(0, 6)
-    return lbl
+    lbl.Parent = frame
+    lbl.BackgroundTransparency = 1
+    lbl.Size = UDim2.new(1, 0, 1, 0)
+    lbl.Font = Enum.Font.GothamBold
+    lbl.Text = text:upper()
+    lbl.TextColor3 = Color3.fromRGB(100, 100, 110)
+    lbl.TextSize = 11
+    lbl.TextXAlignment = Enum.TextXAlignment.Left
+    
+    local line = Instance.new("Frame")
+    line.Parent = frame
+    line.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+    line.BorderSizePixel = 0
+    line.Position = UDim2.new(0, 0, 1, -2)
+    line.Size = UDim2.new(1, 0, 0, 1)
 end
 
 local function createButton(text)
     local btn = Instance.new("TextButton")
     local corner = Instance.new("UICorner")
     btn.Name = text
-    btn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    btn.Font = Enum.Font.GothamBold
+    btn.BackgroundColor3 = Color3.fromRGB(40, 40, 45)
+    btn.Font = Enum.Font.GothamSemibold
     btn.Text = text
-    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    btn.TextSize = 14.000
+    btn.TextColor3 = Color3.fromRGB(220, 220, 220)
+    btn.TextSize = 12
     btn.AutoButtonColor = true
-    corner.CornerRadius = UDim.new(0, 8)
+    corner.CornerRadius = UDim.new(0, 6)
     corner.Parent = btn
     return btn
 end
@@ -214,30 +236,29 @@ local function addRow(buttons, order)
     row.Name = "Row_" .. order
     row.Parent = ContentFrame
     row.BackgroundTransparency = 1
-    row.Size = UDim2.new(0, 200, 0, 35)
+    row.Size = UDim2.new(1, -20, 0, 32)
     row.LayoutOrder = order
     
     local layout = Instance.new("UIListLayout")
     layout.Parent = row
     layout.FillDirection = Enum.FillDirection.Horizontal
     layout.SortOrder = Enum.SortOrder.LayoutOrder
-    layout.Padding = UDim.new(0, 6)
+    layout.Padding = UDim.new(0, 8)
     layout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 
-    if #buttons == 1 then
-        buttons[1].Parent = row
-        buttons[1].Size = UDim2.new(1, 0, 1, 0)
-    elseif #buttons == 2 then
-        buttons[1].Parent = row
-        buttons[1].Size = UDim2.new(0.5, -3, 1, 0)
-        buttons[2].Parent = row
-        buttons[2].Size = UDim2.new(0.5, -3, 1, 0)
+    for _, btn in pairs(buttons) do
+        btn.Parent = row
+        if #buttons == 1 then
+            btn.Size = UDim2.new(1, 0, 1, 0)
+        else
+            btn.Size = UDim2.new(0.5, -4, 1, 0)
+        end
     end
 end
 
 local FarmButton = createButton("Farm Coins")
 local FarmWinsButton = createButton("Auto Farm Wins")
-local KillAllButton = createButton("Kill All Players")
+local KillAllButton = createButton("Kill All")
 local AnnoyButton = createButton("Annoy Server")
 local PizzaSpamButton = createButton("Pizza Spam")
 local TacoSpamButton = createButton("Taco Spam")
@@ -246,27 +267,27 @@ local UpsideDownButton = createButton("Upside Down")
 local ESPButton = createButton("ESP")
 local DotESPButton = createButton("Dot ESP")
 local FullbrightButton = createButton("Fullbright")
-local SpectateMenuButton = createButton("Spectate Menu")
+local SpectateMenuButton = createButton("Spectate")
 local PlatformButton = createButton("Platform")
-local TPToolButton = createButton("Tptool")
-local SpawnButton = createButton("goto spawn")
+local TPToolButton = createButton("TP Tool")
+local SpawnButton = createButton("Goto Spawn")
 local FPSBoostButton = createButton("FPS Boost")
-local LoadBlueBoxButton = createButton("Blue box")
+local LoadBlueBoxButton = createButton("Blue Box")
 local WallhopButton = createButton("Wallhop")
 local TPMapButton = createButton("Goto Map")
 
-createLabel("Farm", 1)
+createLabel("Farming", 1)
 addRow({FarmButton, FarmWinsButton}, 2)
 
 createLabel("Homer", 10)
 addRow({KillAllButton}, 11)
 
-createLabel("Troll", 20)
+createLabel("Trolling", 20)
 addRow({AnnoyButton, PizzaSpamButton}, 21)
 addRow({TacoSpamButton, RitualButton}, 22)
 addRow({UpsideDownButton}, 23)
 
-createLabel("Visual", 30)
+createLabel("Visuals", 30)
 addRow({ESPButton, DotESPButton}, 31)
 addRow({FullbrightButton, SpectateMenuButton}, 32)
 
@@ -281,69 +302,45 @@ SearchBar:GetPropertyChangedSignal("Text"):Connect(function()
     for _, desc in pairs(ContentFrame:GetDescendants()) do
         if desc:IsA("TextButton") then
             if desc.Name:lower():find(text) then
-                desc.Visible = true
+                if desc.Parent and desc.Parent:IsA("Frame") then
+                    desc.Parent.Visible = true
+                end
             else
-                desc.Visible = false
+                if desc.Parent and desc.Parent:IsA("Frame") then
+                    desc.Parent.Visible = false
+                end
             end
         end
     end
 end)
 
-local dragging, dragInput, dragStart, startPos
-
-local function update(input)
-    local delta = input.Position - dragStart
-    MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+local function makeDraggable(frame)
+    local dragging, dragInput, dragStart, startPos
+    frame.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = frame.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then dragging = false end
+            end)
+        end
+    end)
+    frame.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            dragInput = input
+        end
+    end)
+    UserInputService.InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            local delta = input.Position - dragStart
+            TweenService:Create(frame, TweenInfo.new(0.1), {Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)}):Play()
+        end
+    end)
 end
 
-MainFrame.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        dragging = true
-        dragStart = input.Position
-        startPos = MainFrame.Position
-        input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then dragging = false end
-        end)
-    end
-end)
-
-MainFrame.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-        dragInput = input
-    end
-end)
-
-UserInputService.InputChanged:Connect(function(input)
-    if input == dragInput and dragging then update(input) end
-end)
-
-local sDragging, sDragInput, sDragStart, sStartPos
-
-local function updateSpectateDrag(input)
-    local delta = input.Position - sDragStart
-    SpectateFrame.Position = UDim2.new(sStartPos.X.Scale, sStartPos.X.Offset + delta.X, sStartPos.Y.Scale, sStartPos.Y.Offset + delta.Y)
-end
-
-SpectateFrame.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        sDragging = true
-        sDragStart = input.Position
-        sStartPos = SpectateFrame.Position
-        input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then sDragging = false end
-        end)
-    end
-end)
-
-SpectateFrame.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-        sDragInput = input
-    end
-end)
-
-UserInputService.InputChanged:Connect(function(input)
-    if input == sDragInput and sDragging then updateSpectateDrag(input) end
-end)
+makeDraggable(MainFrame)
+makeDraggable(SpectateFrame)
 
 local minimized = false
 local originalSize = MainFrame.Size
@@ -353,12 +350,12 @@ MinimizeButton.MouseButton1Click:Connect(function()
     if minimized then
         ContentFrame.Visible = false
         SearchBar.Visible = false
-        MainFrame.Size = UDim2.new(0, 220, 0, 40)
+        TweenService:Create(MainFrame, TweenInfo.new(0.3), {Size = UDim2.new(0, 240, 0, 40)}):Play()
         MinimizeButton.Text = "+"
     else
         ContentFrame.Visible = true
         SearchBar.Visible = true
-        MainFrame.Size = originalSize
+        TweenService:Create(MainFrame, TweenInfo.new(0.3), {Size = originalSize}):Play()
         MinimizeButton.Text = "-"
     end
 end)
@@ -385,67 +382,61 @@ local tpToolInstance = nil
 local upsideDownActive = false
 local tacoSpamActive = false
 
+local function toggleColor(btn, active)
+    if active then
+        TweenService:Create(btn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(60, 140, 255)}):Play()
+    else
+        TweenService:Create(btn, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(40, 40, 45)}):Play()
+    end
+end
+
 FarmButton.MouseButton1Click:Connect(function()
     farming = not farming
-    if farming then
-        FarmButton.Text = "Stop Farm"
-        FarmButton.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    else
-        FarmButton.Text = "Farm Coins"
-        FarmButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    end
+    toggleColor(FarmButton, farming)
+    FarmButton.Text = farming and "Stop Farm" or "Farm Coins"
 end)
 
 FarmWinsButton.MouseButton1Click:Connect(function()
     farmWins = not farmWins
-    if farmWins then
-        FarmWinsButton.Text = "Wins: ON"
-        FarmWinsButton.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-        task.spawn(function()
-            while farmWins do
-                local char = LocalPlayer.Character
-                if char and char:FindFirstChild("HumanoidRootPart") then
-                    local p = char:FindFirstChild("Pizza") or LocalPlayer.Backpack:FindFirstChild("Pizza")
-                    local t = char:FindFirstChild("Taco") or LocalPlayer.Backpack:FindFirstChild("Taco")
-                    if not p or not t then
-                        local origin = char.HumanoidRootPart.CFrame
-                        for _, pl in pairs(Players:GetPlayers()) do
-                            if not farmWins then break end
-                            if pl ~= LocalPlayer and pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
-                                char.HumanoidRootPart.CFrame = pl.Character.HumanoidRootPart.CFrame
-                                task.wait(0.2)
-                            end
+    toggleColor(FarmWinsButton, farmWins)
+    FarmWinsButton.Text = farmWins and "Wins: ON" or "Auto Farm Wins"
+    task.spawn(function()
+        while farmWins do
+            local char = LocalPlayer.Character
+            if char and char:FindFirstChild("HumanoidRootPart") then
+                local p = char:FindFirstChild("Pizza") or LocalPlayer.Backpack:FindFirstChild("Pizza")
+                local t = char:FindFirstChild("Taco") or LocalPlayer.Backpack:FindFirstChild("Taco")
+                if not p or not t then
+                    local origin = char.HumanoidRootPart.CFrame
+                    for _, pl in pairs(Players:GetPlayers()) do
+                        if not farmWins then break end
+                        if pl ~= LocalPlayer and pl.Character and pl.Character:FindFirstChild("HumanoidRootPart") then
+                            char.HumanoidRootPart.CFrame = pl.Character.HumanoidRootPart.CFrame
+                            task.wait(0.2)
                         end
-                        char.HumanoidRootPart.CFrame = origin
-                    else
-                        char.HumanoidRootPart.CFrame = CFrame.new(winTarget)
                     end
+                    char.HumanoidRootPart.CFrame = origin
+                else
+                    char.HumanoidRootPart.CFrame = CFrame.new(winTarget)
                 end
-                task.wait(10)
             end
-        end)
-    else
-        FarmWinsButton.Text = "Auto Farm Wins"
-        FarmWinsButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    end
+            task.wait(10)
+        end
+    end)
 end)
 
 KillAllButton.MouseButton1Click:Connect(function()
     killAllActive = not killAllActive
     if killAllActive then
-        KillAllButton.Text = "Killing All..."
-        KillAllButton.BackgroundColor3 = Color3.fromRGB(180, 50, 50)
+        KillAllButton.Text = "Killing..."
+        TweenService:Create(KillAllButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(200, 60, 60)}):Play()
         task.spawn(function()
             while killAllActive do
-                local originalPos = nil
                 if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                    originalPos = LocalPlayer.Character.HumanoidRootPart.CFrame
-                end
-                local potentialTargets = Players:GetPlayers()
-                for _, plr in pairs(potentialTargets) do
-                    if not killAllActive then break end
-                    if plr ~= LocalPlayer and plr.Character and plr.Character:FindFirstChild("Humanoid") and plr.Character.Humanoid.Health > 0 and plr.Character:FindFirstChild("HumanoidRootPart") then
-                        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    local potentialTargets = Players:GetPlayers()
+                    for _, plr in pairs(potentialTargets) do
+                        if not killAllActive then break end
+                        if plr ~= LocalPlayer and plr.Character and plr.Character:FindFirstChild("Humanoid") and plr.Character.Humanoid.Health > 0 and plr.Character:FindFirstChild("HumanoidRootPart") then
                             LocalPlayer.Character.HumanoidRootPart.CFrame = plr.Character.HumanoidRootPart.CFrame
                             local tool = LocalPlayer.Character:FindFirstChildOfClass("Tool") or LocalPlayer.Backpack:FindFirstChildOfClass("Tool")
                             if tool then
@@ -460,27 +451,26 @@ KillAllButton.MouseButton1Click:Connect(function()
             end
         end)
     else
-        KillAllButton.Text = "Kill All Players"
-        KillAllButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+        KillAllButton.Text = "Kill All"
+        toggleColor(KillAllButton, false)
     end
 end)
 
 LoadBlueBoxButton.MouseButton1Click:Connect(function()
     local scriptUrl = "https://raw.githubusercontent.com/giobolqvi1/yvh-gui/refs/heads/main/HgCH4NvG62PSy86balVH7D12ZGQZ1D6gfi9n3mYv47R5W4xjny09AX39spW4YTkO.lua.txt"
     LoadBlueBoxButton.Text = "Loaded!"
+    toggleColor(LoadBlueBoxButton, true)
     loadstring(game:HttpGet(scriptUrl))()
     wait(1)
-    LoadBlueBoxButton.Text = "Load Blue Box"
+    LoadBlueBoxButton.Text = "Blue Box"
+    toggleColor(LoadBlueBoxButton, false)
 end)
 
 AnnoyButton.MouseButton1Click:Connect(function()
     annoyServer = not annoyServer
-    if annoyServer then
-        AnnoyButton.Text = "Annoying Server..."
-        AnnoyButton.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    else
-        AnnoyButton.Text = "Annoy Server"
-        AnnoyButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    toggleColor(AnnoyButton, annoyServer)
+    AnnoyButton.Text = annoyServer and "Annoying..." or "Annoy Server"
+    if not annoyServer then
         if annoyPlatform then
             annoyPlatform:Destroy()
             annoyPlatform = nil
@@ -491,13 +481,8 @@ end)
 
 PizzaSpamButton.MouseButton1Click:Connect(function()
     pizzaSpamActive = not pizzaSpamActive
-    if pizzaSpamActive then
-        PizzaSpamButton.Text = "Spamming Pizza..."
-        PizzaSpamButton.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    else
-        PizzaSpamButton.Text = "Pizza Spam"
-        PizzaSpamButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    end
+    toggleColor(PizzaSpamButton, pizzaSpamActive)
+    PizzaSpamButton.Text = pizzaSpamActive and "Spamming..." or "Pizza Spam"
 end)
 
 RitualButton.MouseButton1Click:Connect(function()
@@ -505,7 +490,7 @@ RitualButton.MouseButton1Click:Connect(function()
     ritualActive = true
     ritualStartTime = tick()
     RitualButton.Text = "ASCENDING..."
-    RitualButton.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
+    TweenService:Create(RitualButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(160, 40, 160)}):Play()
     if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
         LocalPlayer.Character.HumanoidRootPart.Anchored = true
     end
@@ -513,14 +498,9 @@ end)
 
 PlatformButton.MouseButton1Click:Connect(function()
     platformActive = not platformActive
-    if platformActive then
-        PlatformButton.Text = "Platform: ON"
-        PlatformButton.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    else
-        PlatformButton.Text = "Platform"
-        PlatformButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-        if myPlatform then myPlatform:Destroy() myPlatform = nil end
-    end
+    toggleColor(PlatformButton, platformActive)
+    PlatformButton.Text = platformActive and "Platform: ON" or "Platform"
+    if not platformActive and myPlatform then myPlatform:Destroy() myPlatform = nil end
 end)
 
 local function checkItems(plr)
@@ -603,30 +583,26 @@ end
 
 ESPButton.MouseButton1Click:Connect(function()
     espEnabled = not espEnabled
-    if espEnabled then dotEspEnabled = false DotESPButton.Text = "Dot ESP" DotESPButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50) end
-    
-    if espEnabled then
-        ESPButton.Text = "Box ESP: ON"
-        ESPButton.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    else
-        ESPButton.Text = "ESP"
-        ESPButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-        clearESP()
+    if espEnabled then 
+        dotEspEnabled = false 
+        DotESPButton.Text = "Dot ESP" 
+        toggleColor(DotESPButton, false)
     end
+    toggleColor(ESPButton, espEnabled)
+    ESPButton.Text = espEnabled and "ESP: ON" or "ESP"
+    if not espEnabled then clearESP() end
 end)
 
 DotESPButton.MouseButton1Click:Connect(function()
     dotEspEnabled = not dotEspEnabled
-    if dotEspEnabled then espEnabled = false ESPButton.Text = "ESP" ESPButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50) end
-
-    if dotEspEnabled then
-        DotESPButton.Text = "Dot ESP: ON"
-        DotESPButton.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    else
-        DotESPButton.Text = "Dot ESP"
-        DotESPButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-        clearESP()
+    if dotEspEnabled then 
+        espEnabled = false 
+        ESPButton.Text = "ESP" 
+        toggleColor(ESPButton, false)
     end
+    toggleColor(DotESPButton, dotEspEnabled)
+    DotESPButton.Text = dotEspEnabled and "Dot ESP: ON" or "Dot ESP"
+    if not dotEspEnabled then clearESP() end
 end)
 
 task.spawn(function()
@@ -635,17 +611,17 @@ task.spawn(function()
         if espEnabled then
             for _, plr in pairs(Players:GetPlayers()) do
                 if plr ~= LocalPlayer and plr.Character and plr.Character:FindFirstChild("Head") then
-                    local color = Color3.fromRGB(255, 0, 0)
-                    if checkItems(plr) then color = Color3.fromRGB(255, 255, 0) end
+                    local color = Color3.fromRGB(255, 60, 60)
+                    if checkItems(plr) then color = Color3.fromRGB(255, 255, 60) end
                     updateBoxESP(plr.Character, color)
                 end
             end
         elseif dotEspEnabled then
             for _, plr in pairs(Players:GetPlayers()) do
                 if plr ~= LocalPlayer and plr.Character and plr.Character:FindFirstChild("Head") then
-                    local color = Color3.fromRGB(255, 0, 0)
+                    local color = Color3.fromRGB(255, 60, 60)
                     if checkItems(plr) then
-                        color = Color3.fromRGB(255, 255, 0)
+                        color = Color3.fromRGB(255, 255, 60)
                     end
                     updateDotESP(plr.Character, color)
                 end
@@ -656,9 +632,9 @@ end)
 
 FullbrightButton.MouseButton1Click:Connect(function()
     fullbright = not fullbright
+    toggleColor(FullbrightButton, fullbright)
     if fullbright then
         FullbrightButton.Text = "Fullbright: ON"
-        FullbrightButton.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
         Lighting.Brightness = 2
         Lighting.ClockTime = 14
         Lighting.FogEnd = 100000
@@ -666,7 +642,6 @@ FullbrightButton.MouseButton1Click:Connect(function()
         Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
     else
         FullbrightButton.Text = "Fullbright"
-        FullbrightButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
         Lighting.Brightness = 1
         Lighting.ClockTime = 12
         Lighting.FogEnd = 10000
@@ -677,9 +652,9 @@ end)
 
 TPToolButton.MouseButton1Click:Connect(function()
     tpToolActive = not tpToolActive
+    toggleColor(TPToolButton, tpToolActive)
     if tpToolActive then
         TPToolButton.Text = "TP Tool: ON"
-        TPToolButton.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
         tpToolInstance = Instance.new("Tool")
         tpToolInstance.Name = "TP Tool"
         tpToolInstance.RequiresHandle = false
@@ -691,12 +666,8 @@ TPToolButton.MouseButton1Click:Connect(function()
             end
         end)
     else
-        TPToolButton.Text = "Tptool"
-        TPToolButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-        if tpToolInstance then
-            tpToolInstance:Destroy()
-            tpToolInstance = nil
-        end
+        TPToolButton.Text = "TP Tool"
+        if tpToolInstance then tpToolInstance:Destroy() tpToolInstance = nil end
         local existingTool = LocalPlayer.Backpack:FindFirstChild("TP Tool")
         if existingTool then existingTool:Destroy() end
         if LocalPlayer.Character then
@@ -725,9 +696,7 @@ local currentSpectateTarget = nil
 local function getSpectateTargets()
     local targets = {}
     for _, p in pairs(Players:GetPlayers()) do
-        if p ~= LocalPlayer then
-            table.insert(targets, p)
-        end
+        if p ~= LocalPlayer then table.insert(targets, p) end
     end
     return targets
 end
@@ -752,6 +721,7 @@ end
 
 SpectateMenuButton.MouseButton1Click:Connect(function()
     SpectateFrame.Visible = not SpectateFrame.Visible
+    toggleColor(SpectateMenuButton, SpectateFrame.Visible)
     if SpectateFrame.Visible then
         updateSpectate()
     else
@@ -771,6 +741,7 @@ end)
 
 SpecExit.MouseButton1Click:Connect(function()
     SpectateFrame.Visible = false
+    toggleColor(SpectateMenuButton, false)
     Camera.CameraSubject = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid")
 end)
 
@@ -820,37 +791,31 @@ FPSBoostButton.MouseButton1Click:Connect(function()
     Lighting.GlobalShadows = false
     Lighting.FogEnd = 9e9
     FPSBoostButton.Text = "FPS Boosted!"
+    toggleColor(FPSBoostButton, true)
     task.wait(1)
     FPSBoostButton.Text = "FPS Boost"
+    toggleColor(FPSBoostButton, false)
 end)
 
 WallhopButton.MouseButton1Click:Connect(function()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/giobolqvi1/wallhop-by-GioBolqv1-fuck-spiderscripts-skidders/refs/heads/main/obfuscated_script-1769006346803.lua.txt"))()
-    WallhopButton.Text = "Wallhop"
+    WallhopButton.Text = "Loaded"
+    toggleColor(WallhopButton, true)
     wait(1)
-    WallhopButton.Text = "wallhop"
+    WallhopButton.Text = "Wallhop"
+    toggleColor(WallhopButton, false)
 end)
 
 UpsideDownButton.MouseButton1Click:Connect(function()
     upsideDownActive = not upsideDownActive
-    if upsideDownActive then
-        UpsideDownButton.Text = "Upside Down: ON"
-        UpsideDownButton.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    else
-        UpsideDownButton.Text = "Upside Down"
-        UpsideDownButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    end
+    toggleColor(UpsideDownButton, upsideDownActive)
+    UpsideDownButton.Text = upsideDownActive and "Upside Down: ON" or "Upside Down"
 end)
 
 TacoSpamButton.MouseButton1Click:Connect(function()
     tacoSpamActive = not tacoSpamActive
-    if tacoSpamActive then
-        TacoSpamButton.Text = "Spamming Taco..."
-        TacoSpamButton.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
-    else
-        TacoSpamButton.Text = "Taco Spam"
-        TacoSpamButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    end
+    toggleColor(TacoSpamButton, tacoSpamActive)
+    TacoSpamButton.Text = tacoSpamActive and "Spamming..." or "Taco Spam"
 end)
 
 RunService.RenderStepped:Connect(function()
@@ -872,7 +837,7 @@ RunService.RenderStepped:Connect(function()
             hum.Health = 0
             ritualActive = false
             RitualButton.Text = "Homer Ritual"
-            RitualButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+            toggleColor(RitualButton, false)
         else
             local rampUp = math.pow(elapsed / 4.4, 4)
             local spinSpeed = 0.1 + (rampUp * 40)
